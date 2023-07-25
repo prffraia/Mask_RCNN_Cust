@@ -12,19 +12,19 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
        the command line as such:
 
     # Train a new model starting from pre-trained COCO weights
-    python3 balloon.py train --dataset=/path/to/balloon/dataset --weights=coco
+    python3 tree.py train --dataset=/content/Mask_RCNN_Cust/Training (Sep) --weights=coco
 
     # Resume training a model that you had trained earlier
-    python3 balloon.py train --dataset=/path/to/balloon/dataset --weights=last
+    python3 tree.py train --dataset=/content/Mask_RCNN_Cust/Training (Sep) --weights=last
 
     # Train a new model starting from ImageNet weights
-    python3 balloon.py train --dataset=/path/to/balloon/dataset --weights=imagenet
+    python3 tree.py train --dataset=/content/Mask_RCNN_Cust/Training (Sep) --weights=imagenet
 
     # Apply color splash to an image
-    python3 balloon.py splash --weights=/path/to/weights/file.h5 --image=<URL or path to file>
+    python3 tree.py splash --weights=/path/to/weights/file.h5 --image=<URL or path to file>
 
     # Apply color splash to video using the last weights you trained
-    python3 balloon.py splash --weights=last --video=<URL or path to file>
+    python3 tree.py splash --weights=last --video=<URL or path to file>
 """
 
 import os
@@ -180,12 +180,12 @@ def train(model):
     """Train the model."""
     # Training dataset.
     dataset_train = TreeDataset()
-    dataset_train.load_balloon("/content/Mask_RCNN_Cust/samples/trees/Training (Sep)", "train")
+    dataset_train.load_tree("/content/Mask_RCNN_Cust/Training (Sep)", "train")
     dataset_train.prepare()
 
     # Validation dataset
     dataset_val = TreeDataset()
-    dataset_val.load_balloon("/content/Mask_RCNN_Cust/samples/trees/Validation (Sep)", "val")
+    dataset_val.load_tree("/content/Mask_RCNN_Cust/Validation (Sep)", "val")
     dataset_val.prepare()
 
     # *** This training schedule is an example. Update to your needs ***
@@ -280,13 +280,13 @@ if __name__ == '__main__':
 
     # Parse command line arguments
     parser = argparse.ArgumentParser(
-        description='Train Mask R-CNN to detect balloons.')
+        description='Train Mask R-CNN to detect trees.')
     parser.add_argument("command",
                         metavar="<command>",
                         help="'train' or 'splash'")
     parser.add_argument('--dataset', required=False,
-                        metavar="/path/to/balloon/dataset/",
-                        help='Directory of the Balloon dataset')
+                        metavar="/content/Mask_RCNN_Cust/Training (Sep)",
+                        help='Directory of the Tree dataset')
     parser.add_argument('--weights', required=True,
                         metavar="/path/to/weights.h5",
                         help="Path to weights .h5 file or 'coco'")
@@ -315,9 +315,9 @@ if __name__ == '__main__':
 
     # Configurations
     if args.command == "train":
-        config = BalloonConfig()
+        config = TreeConfig()
     else:
-        class InferenceConfig(BalloonConfig):
+        class InferenceConfig(TreeConfig):
             # Set batch size to 1 since we'll be running inference on
             # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
             GPU_COUNT = 1
