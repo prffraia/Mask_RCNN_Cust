@@ -1444,7 +1444,7 @@ def build_detection_targets(rpn_rois, gt_class_ids, gt_boxes, gt_masks, config):
 def norm_boxes_graph2(x):
     boxes, tensor_for_shape = x
     shape = tf.shape(tensor_for_shape)[1:3]
-    return norm_boxes_graph(boxes, shape
+    return norm_boxes_graph(boxes, shape)
 
 def build_rpn_targets(image_shape, anchors, gt_class_ids, gt_boxes, config):
     """Given the anchors and GT boxes, compute overlaps and identify positive
